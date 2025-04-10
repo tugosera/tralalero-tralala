@@ -1,68 +1,61 @@
-logs = []
+# tasks = []
 
-def liitumine(a,b):
-    logs.append('liitumine')
-    if isinstance (a, str) or isinstance (b, str):
-        print ("vale andmed") 
-        return("")
-    return a + b
 
-def minus(a,b):
-    logs.append('minus')
-    if isinstance (a, str) or isinstance (b, str):
-        print ("vale andmed") 
-        return("")
-    return a - b
+#def add_task(task):
+#    return tasks.append(task)
 
-def delit(a,b):
-    logs.append('delit')
-    if isinstance (a, str) or isinstance (b, str):
-        print ("vale andmed") 
-        return("")
-    if b == 0:
-        print ("NELZA DELIT NA NOLL!!!")
-        return("") 
-    return a / b
+#def main():
+#    global task
+    
+#    print("1 - lisa ülesanne \n 2 - kustutta ülesanne \n 3 - ülevaadata ülesanded")
+#    userInput = input("Mida sa tahad? \n")
+#    if userInput == "1":
+#        task = add_task(input("sisesta ülesande: "))
+#    elif userInput == "2":
+#        pass
+#    elif userInput == "3":
+#        pass
+#    else:
+#        print("Sa sisestasid midafi vale")
 
-def umnoz(a,b):
-    logs.append('umnoz')
-    if isinstance (a, str) or isinstance (b, str):
-        print ("vale andmed") 
-        return("")
-    return a * b
-def logsKuvamine(logs):
-    for elem in logs:
-        if elem == "liitumine":
-            korr += 1
-        elif elem == "minus":
-            jag += 1
-        elif elem == "delit":
-            liit += 1
+import streamlit as st
+
+if "tasks" not in st.session_state:
+    st.session_state.tasks = []
+
+st.title("Todo List")
+
+def add_task():
+    task = st.text_input("Sisesta uus ülesanne", key="new_task_input")
+    if st.button("Lisa"):
+        if task.strip():
+            st.session_state.tasks.append({"text": task, "done": False})
+            st.rerun()
         else:
-            lahut += 1
-        return[jag,korr,liit,lahut]
+            st.warning("Sisesta mitte tühi ülesanne")
 
+add_task()
 
-print("insert 2 numbers")
-a = int(input())
-b = int(input())
-print("Chose cho delat (insert number)")
-print("1 - slozenie")
-print("2 - minus")
-print("3 - delenie")
-print("4 - umnozenie")
-valik = int(input())
-if valik == 1:
-    print(liitumine(a,b))
-elif valik == 2:
-    print(minus(a,b))
-elif valik == 3:
-    print(delit(a,b))
-elif valik == 4:
-    print(umnoz(a,b))
-else:
-     print("bebebe")
+st.subheader("Ülesannete nimekiri")
 
+def show_tasks():
+    if not st.session_state.tasks:
+        st.info("Ei ole ülesandeid")
+        return
 
+    for index, task in enumerate(st.session_state.tasks):
+        cols = st.columns([0.05, 0.90, 0.05])
+        with cols[0]:
+            task["done"] = st.checkbox("", value=task["done"], key=f"done_{index}")
+        with cols[1]:
+            if task["done"] == True:
+                text = "----------------",task["text"],"----------------"
+            else:
+                text = task = task["text"]
+            st.markdown(text)
+        with cols[2]:
+            if st.button("Kustuta", key=f"delete_{index}"):
+                st.session_state.tasks.pop(index)
+                st.rerun()
 
-
+show_tasks()
