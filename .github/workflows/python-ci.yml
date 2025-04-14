@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: 3.9
       - name: Paigaldada soltuvusd
-        run: plp install pytest
+        run: pip install pytest
 
-      - name: kaivitade testid
+      - name: käivitade testid
         run: pytest
