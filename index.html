@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Генератор новостей</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Подключение CSS -->
+  </head>
+  <body>
+    <h1>Генератор новостей</h1>
+
+    <label for="category">Выберите категорию:</label>
+    <select id="category">
+      <option value="технологии">Технологии</option>
+      <option value="спорт">Спортивные новости</option>
+      <option value="политика">Политика</option>
+    </select>
+    <button onclick="generateNews()">Сгенерировать новость</button>
+
+    <div class="news" id="news"></div>
+
+    <h3>Добавить свою новость:</h3>
+    <input type="text" id="customNews" placeholder="Введите новость" />
+    <label for="customCategory">Категория:</label>
+    <select id="customCategory">
+      <option value="технологии">Технологии</option>
+      <option value="спорт">Спортивные новости</option>
+      <option value="политика">Политика</option>
+    </select>
+    <button onclick="addCustomNews()">Добавить новость</button>
+
+    <script>
+      const newsData = {
+        технологии: [
+          "Новая разработка ИИ потрясла индустрию",
+          "Apple выпустила обновление",
+          "Хакеры атаковали крупную компанию",
+        ],
+        спорт: [
+          "Команда России выиграла матч",
+          "Установлен новый мировой рекорд",
+          "Известный футболист завершил карьеру",
+        ],
+        политика: ["Принят новый закон", "Прошли выборы", "Объявлены санкции"],
+      };
+
+      function getRandomDate() {
+        const daysAgo = Math.floor(Math.random() * 7);
+        const date = new Date();
+        date.setDate(date.getDate() - daysAgo);
+        return date.toLocaleDateString();
+      }
+
+      function generateNews() {
+        const category = document.getElementById("category").value;
+        const newsList = newsData[category];
+        const newsContainer = document.getElementById("news");
+        newsContainer.innerHTML = ""; // Очищаем перед добавлением
+
+        const randomIndex = Math.floor(Math.random() * newsList.length);
+        const newsItem = `${newsList[randomIndex]} — ${getRandomDate()}`;
+        const div = document.createElement("div");
+        div.className = "news-item";
+        div.textContent = newsItem;
+        newsContainer.appendChild(div);
+
+        setTimeout(() => {
+          if (confirm("Хотите сгенерировать другую новость?")) {
+            generateNews();
+          }
+        }, 100);
+      }
+
+      function addCustomNews() {
+        const input = document.getElementById("customNews");
+        const text = input.value.trim();
+        const category = document.getElementById("customCategory").value;
+
+        if (text) {
+          newsData[category].push(text); // Добавляем в массив новостей
+          const div = document.createElement("div");
+          div.className = "news-item";
+          div.textContent = `${text} — ${getRandomDate()}`;
+          document.getElementById("news").appendChild(div);
+          input.value = "";
+        }
+      }
+    </script>
+  </body>
+</html>
