@@ -1,4 +1,5 @@
 import json, datetime
+import unittest
 
 def validate_record(record):
     try:
@@ -46,4 +47,30 @@ def procces_log_file(filepath):
             else:
                 error_log.write(line + f"| ERROR: {message} \n")
 
+
+class TestGpsValidation(unittest.TestCase):
+    def test_valid_record(self):
+        record =  {
+        "truck_id": "TRUK123",
+        "latitude": 59.437,
+        "longitude": 24.7536,
+        "timestamp": "2025-04-16T10:05:00Z"
+    }
+
+        valid, message, timestamp = validate_record(record)
+        self.assertTrue(valid) 
+        self.assertEqual(message, "Valid")
+
+    def test_missing_truck_id(self):
+        record =  {
+            "latitude": 59.437,
+            "longitude": 24.7536,
+            "timestamp": "2025-04-16T10:05:00Z"
+        }
+        valid, message, timestamp = validate_record(record)
+        self.assertFalse(valid) 
+        self.assertEqual(message, "Invalid or missing truck_id")
+
+
 procces_log_file("log_input.json")
+unittest.main()
