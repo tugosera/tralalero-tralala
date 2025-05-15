@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="eng">
   <head>
     <meta charset="UTF-8" />
-    <title>Генератор новостей</title>
+    <title>News generator</title>
     <link rel="stylesheet" href="styles.css" />
     <!-- Подключение CSS -->
   </head>
   <body>
-    <h1>Генератор новостей</h1>
+    <h1>News generator</h1>
 
-    <label for="category">Выберите категорию:</label>
+    <label for="category">Choose category:</label>
     <select id="category">
-      <option value="технологии">Технологии</option>
-      <option value="спорт">Спортивные новости</option>
-      <option value="политика">Политика</option>
+      <option value="технологии">Technologies</option>
+      <option value="спорт">Sports news</option>
+      <option value="политика">Policies</option>
     </select>
-    <button onclick="generateNews()">Сгенерировать новость</button>
+    <button onclick="generateNews()">Generate news</button>
 
     <div class="news" id="news"></div>
 
-    <h3>Добавить свою новость:</h3>
+    <h3>Add your news:</h3>
     <input type="text" id="customNews" placeholder="Введите новость" />
-    <label for="customCategory">Категория:</label>
+    <label for="customCategory">category:</label>
     <select id="customCategory">
-      <option value="технологии">Технологии</option>
-      <option value="спорт">Спортивные новости</option>
-      <option value="политика">Политика</option>
+      <option value="технологии">Technologies</option>
+      <option value="спорт">Sports news</option>
+      <option value="политика">Policies</option>
     </select>
-    <button onclick="addCustomNews()">Добавить новость</button>
+    <button onclick="addCustomNews()">Add news</button>
 
     <script>
       const newsData = {
         технологии: [
-          "Новая разработка ИИ потрясла индустрию",
-          "Apple выпустила обновление",
-          "Хакеры атаковали крупную компанию",
+          "The industry has been shocked by the new development of the IP.",
+          "Apple launched an update.",
+          "The hackers attacked a large company.",
         ],
         спорт: [
-          "Команда России выиграла матч",
-          "Установлен новый мировой рекорд",
-          "Известный футболист завершил карьеру",
+          "The Russian team won the match",
+          "A new world record has been set.",
+          "A famous footballer has completed his career.",
         ],
-        политика: ["Принят новый закон", "Прошли выборы", "Объявлены санкции"],
+        политика: ["A new law has been adopted.","They hit the second tower", "Elections are over.", "Sanctions have been issued"],
       };
 
       function getRandomDate() {
@@ -65,7 +65,7 @@
         newsContainer.appendChild(div);
 
         setTimeout(() => {
-          if (confirm("Хотите сгенерировать другую новость?")) {
+          if (confirm("Would you like to generate another news?")) {
             generateNews();
           }
         }, 100);
